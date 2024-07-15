@@ -2,7 +2,6 @@ from redis import Redis
 
 from app.schemas import Pixel
 from app.utils import singleton
-from config import config
 
 
 @singleton
