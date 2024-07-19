@@ -1,0 +1,44 @@
+@font-face {
+  font-family: "pixel";
+  src: url("04B_30__.TTF") format("truetype");
+  font-style: normal;
+  font-weight: normal;
+}
+
+canvas {
+    border: 2px solid black;
+    width: 90%;
+    object-fit: contain;    
+}
+
+
+body {
+    background-color: #7FB5B5;
+    font-family:'Courier New', Courier, monospace
+}
+
+h1 {
+    color: white;
+    font-size: 34px;
+    text-shadow: .1em .1em 0 hsl(200 50% 30%);
+    font-family: "pixel";
+}
+
+.color {
+    width: 32px;
+    height: 32px;
+    color: red;
+}
+
+#palette {
+    float: right;
+}
+
+.palette_color {
+    width: 4em;
+    height: 4em;
+    border: 2px solid black;
+    box-sizing: border-box;
+    margin-bottom: 5px;
+    margin-right: 1em;
+}

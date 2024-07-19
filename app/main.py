@@ -31,6 +31,7 @@ async def websocket_endpoint(
     hot_repository: Annotated[HotRepository, Depends(get_hot_repository)],
     manager: Annotated[ConnectionManager, Depends(get_connection_manager)]
 ):
+    print(1)
     await manager.connect(websocket)
     try:
         while True:
