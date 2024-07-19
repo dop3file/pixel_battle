@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel battle</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/style.css') }}">
+</head>
+<body>
+    <center>
+        <h1>Pixel Battle</h1>
+    </center>
+    <main>
+        <div style="position: relative;">
+            <canvas id="layer1"
+                style="position: absolute; z-index: 0;"></canvas>
+            <canvas id="layer2"
+                style="position: absolute; z-index: 1;"></canvas>
+        </div>
+        <div id="palette"></div>
+    </main>
+    <script src="{{ url_for('static', path='/script.js') }}"></script>
+</body>
+</html>
