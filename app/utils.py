@@ -43,8 +43,13 @@ class ConnectionManager:
         await websocket.accept()
         self.active_connections[websocket] = time.time()
 
-    def disconnect(self, websocket: WebSocket):
+    async def disconnect(self, websocket: WebSocket):
+        try:
+            await websocket.close()
+        except Exception:
+            ...
         del self.active_connections[websocket]
+
 
     async def send_personal_message(self, message: str, websocket: WebSocket):
         await websocket.send_text(message)

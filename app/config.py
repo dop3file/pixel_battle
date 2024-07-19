@@ -13,5 +13,8 @@ class Config(BaseSettings):
 
     DRAW_DELAY: float
 
+    WIDTH: int
+    HEIGHT: int
+
 
 config = Config()

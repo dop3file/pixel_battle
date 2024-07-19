@@ -13,7 +13,8 @@ from app.repository import HotRepository
 from app.schemas import Pixel
 from app.utils import ConnectionManager
 
-app = FastAPI()
+
+app = FastAPI(docs_url=None, redoc_url=None)
 app.mount('/static', StaticFiles(directory='app/static', html=True), name='static')
 templates = Jinja2Templates(directory="app/templates")
 
@@ -31,7 +32,6 @@ async def websocket_endpoint(
     hot_repository: Annotated[HotRepository, Depends(get_hot_repository)],
     manager: Annotated[ConnectionManager, Depends(get_connection_manager)]
 ):
-    print(1)
     await manager.connect(websocket)
     try:
         while True:
@@ -40,12 +40,11 @@ async def websocket_endpoint(
                 ...
             else:
                 if manager.is_active(websocket):
-                    try:
-                        pixel = Pixel.parse_obj(json.loads(data))
-                        hot_repository.set(pixel)
-                        manager.update(websocket)
-                    except ValidationError:
-                        ...
+                    pixel = Pixel.parse_obj(json.loads(data))
+                    hot_repository.set(pixel)
+                    manager.update(websocket)
             await manager.broadcast(json.dumps(hot_repository.get_all()))
     except WebSocketDisconnect:
-        manager.disconnect(websocket)
+        await manager.disconnect(websocket)
+    except Exception:
+        await manager.disconnect(websocket)
