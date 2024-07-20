@@ -35,7 +35,6 @@ async def websocket_endpoint(
     manager: Annotated[ConnectionManager, Depends(get_connection_manager)]
 ):
     await manager.connect(websocket)
-    logging.debug(hot_repository.get_all())
     try:
         while True:
             data = await websocket.receive_text()
@@ -47,7 +46,9 @@ async def websocket_endpoint(
                     hot_repository.set(pixel)
                     manager.update(websocket)
             await manager.broadcast(json.dumps(hot_repository.get_all()))
-    except WebSocketDisconnect:
+    except WebSocketDisconnect as e:
+        logging.error(e)
         await manager.disconnect(websocket)
-    except Exception:
+    except Exception as e:
+        logging.error(e)
         await manager.disconnect(websocket)
