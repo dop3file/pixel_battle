@@ -12,3 +12,36 @@ services:
       - "6380:6379"
     volumes:
       - ./redisdata:/data
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_USER=${REDIS_USER}
+      - REDIS_USER_PASSWORD=${REDIS_USER_PASSWORD}
+      - REDIS_DB=${REDIS_DB}
+      - REDIS_PORT=${REDIS_PORT}
+      - REDIS_HOST=${REDIS_HOST}
+      - DRAW_DELAY=${DRAW_DELAY}
+      - WIDTH=${WIDTH}
+      - HEIGHT=${HEIGHT}
+  nginx:
+    restart: unless-stopped
+    image: nginx
+    container_name: nginx
+    ports:
+      - "80:80"
+      # - "443:443"
+    # environment:
+    #   - CERTBOT_EMAIL=youremail@gmail.com
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/user_conf.d:ro
+      # - letsencrypt:/etc/letsencrypt
+    depends_on:
+      - app
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100k"
+        max-file: "1"

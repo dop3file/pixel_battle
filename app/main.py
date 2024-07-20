@@ -1,6 +1,8 @@
 import json
+import logging
 from typing import Annotated
 
+import uvicorn
 from fastapi import WebSocket, Depends
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
@@ -33,6 +35,7 @@ async def websocket_endpoint(
     manager: Annotated[ConnectionManager, Depends(get_connection_manager)]
 ):
     await manager.connect(websocket)
+    logging.debug(hot_repository.get_all())
     try:
         while True:
             data = await websocket.receive_text()
