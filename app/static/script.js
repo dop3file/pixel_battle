@@ -14,7 +14,7 @@ const ctx2 = canvas2.getContext("2d");
 
 const COLORS = ["orange", "red", "purple", "green", "yellow", "white", "black"]
 
-HOST = "localhost"
+HOST = "195.2.76.202"
 PORT = 8000
 
 let ws = new WebSocket(`ws://${HOST}:${PORT}/ws`)
@@ -52,7 +52,7 @@ function spawPalette() {
 
 
 function draw() {
-    ctx2.fillStyle = "rgb(220 220 220)";
+    ctx2.fillStyle = "white";
 
     for (let i = 0; i < WIDTH; i+=STEP) {
         for (let j = 0; j < HEIGHT; j+=STEP) {
